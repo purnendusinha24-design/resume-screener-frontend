@@ -10,14 +10,6 @@ export default function CandidateTable({ batchId }: Props) {
   const { data: candidates, loading } = useCandidates(batchId);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
-  if (loading) {
-    return <p className="text-gray-500">Loading candidates...</p>;
-  }
-
-  if (!candidates.length) {
-    return <p className="text-gray-500">No resumes found for this batch.</p>;
-  }
-
   // 🔑 Keyboard navigation
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
@@ -39,6 +31,15 @@ export default function CandidateTable({ batchId }: Props) {
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
   }, [candidates]);
+
+  // ✅ AFTER all hooks — conditional rendering is OK
+  if (loading) {
+    return <p className="text-gray-500">Loading candidates...</p>;
+  }
+
+  if (!candidates.length) {
+    return <p className="text-gray-500">No resumes found for this batch.</p>;
+  }
 
   return (
     <>
