@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import CandidateTable from "../components/CandidateTable";
 import { useBatches } from "../hooks/useBatches";
+import { NavLink } from "react-router-dom";
 
 type Stats = {
   total: number;
@@ -29,11 +30,43 @@ export default function Dashboard() {
       <aside className="w-64 bg-gray-900 text-white p-6">
         <h1 className="text-xl font-bold mb-8">AI Resume Screener</h1>
         <nav className="space-y-4 text-sm">
-          <p className="text-blue-400">Dashboard</p>
-          <p className="text-gray-400">Candidates</p>
-          <p className="text-gray-400">Upload Resume</p>
-          <p className="text-gray-400">Settings</p>
-        </nav>
+  <NavLink
+    to="/"
+    className={({ isActive }) =>
+      isActive ? "text-blue-400 font-medium" : "text-gray-400"
+    }
+  >
+    Dashboard
+  </NavLink>
+
+  <NavLink
+    to="/candidates"
+    className={({ isActive }) =>
+      isActive ? "text-blue-400 font-medium" : "text-gray-400"
+    }
+  >
+    Candidates
+  </NavLink>
+
+  <NavLink
+    to="/upload"
+    className={({ isActive }) =>
+      isActive ? "text-blue-400 font-medium" : "text-gray-400"
+    }
+  >
+    Upload Resume
+  </NavLink>
+
+  <NavLink
+    to="/settings"
+    className={({ isActive }) =>
+      isActive ? "text-blue-400 font-medium" : "text-gray-400"
+    }
+  >
+    Settings
+  </NavLink>
+</nav>
+
       </aside>
 
       {/* Main Content */}

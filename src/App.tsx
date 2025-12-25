@@ -1,5 +1,17 @@
+import { Routes, Route } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 
+const Placeholder = ({ title }: { title: string }) => (
+  <div className="p-8 text-xl">{title} page coming soon</div>
+);
+
 export default function App() {
-  return <Dashboard />;
+  return (
+    <Routes>
+      <Route path="/" element={<Dashboard />} />
+      <Route path="/candidates" element={<Placeholder title="Candidates" />} />
+      <Route path="/upload" element={<Placeholder title="Upload Resume" />} />
+      <Route path="/settings" element={<Placeholder title="Settings" />} />
+    </Routes>
+  );
 }
