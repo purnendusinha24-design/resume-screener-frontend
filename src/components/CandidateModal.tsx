@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 type Candidate = {
   filename: string;
@@ -21,6 +21,8 @@ export default function CandidateModal({
   onPrev,
   onNext,
 }: Props) {
+
+  const [showRaw, setShowRaw] = useState(false);
   // Keyboard shortcuts
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
@@ -37,20 +39,35 @@ export default function CandidateModal({
       ? candidate.reasons.split(";").map((r) => r.trim())
       : [];
 
-  const highlightText = (text: string, keywords: string[]) => {
-    if (!keywords.length) return text;
+  const SALES_KEYWORDS = [
+  "sales",
+  "target",
+  "revenue",
+  "lead",
+  "crm",
+  "client",
+  "business",
+  "marketing",
+  "phone",
+  "email",
+];
 
-    const regex = new RegExp(`(${keywords.join("|")})`, "gi");
-    return text.split(regex).map((part, i) =>
-      regex.test(part) ? (
-        <mark key={i} className="bg-yellow-200 px-1 rounded">
-          {part}
-        </mark>
-      ) : (
-        part
-      )
+const highlightLine = (line: string) => {
+  let result = line;
+  SALES_KEYWORDS.forEach((k) => {
+    const regex = new RegExp(`\\b(${k})\\b`, "gi");
+    result = result.replace(
+      regex,
+      `<mark class="bg-yellow-200 px-1 rounded">$1</mark>`
     );
-  };
+  });
+  return result;
+};
+
+const resumeLines = candidate.rawText
+  .split("\n")
+  .map((l) => l.trim())
+  .filter((l) => l.length > 0);
 
   return (
     <div
@@ -113,11 +130,42 @@ export default function CandidateModal({
 
           <hr className="my-4" />
 
+const [showRaw, setShowRaw] = useState(false);
+
+<button
+  onClick={() => setShowRaw(!showRaw)}
+  className="text-xs text-blue-600 underline mb-2"
+>
+  {showRaw ? "Hide raw text" : "Show raw text"}
+</button>
+
+{showRaw ? (
+  <pre className="bg-gray-100 p-3 rounded text-xs whitespace-pre-wrap">
+    {candidate.rawText}
+  </pre>
+) : (
+  <div className="bg-gray-100 p-4 rounded text-sm space-y-2">
+    {resumeLines.map((line, i) => (
+      <p
+        key={i}
+        dangerouslySetInnerHTML={{ __html: highlightLine(line) }}
+      />
+    ))}
+  </div>
+)}
+
           {/* Resume */}
           <h4 className="font-semibold mb-2">Resume Content</h4>
-          <pre className="bg-gray-100 p-3 rounded text-sm whitespace-pre-wrap max-h-87.5 overflow-auto">
-            {highlightText(candidate.rawText, reasons)}
-          </pre>
+          <div className="bg-gray-100 p-4 rounded text-sm space-y-2">
+  {resumeLines.map((line, i) => (
+    <p
+      key={i}
+      className="text-gray-800 leading-relaxed"
+      dangerouslySetInnerHTML={{ __html: highlightLine(line) }}
+    />
+  ))}
+</div>
+
         </div>
       </div>
     </div>
