@@ -15,7 +15,6 @@ type Props = {
   onNext: () => void;
 };
 
-const [showRaw, setShowRaw] = useState(false);
 export default function CandidateModal({
   candidate,
   onClose,
@@ -33,7 +32,7 @@ export default function CandidateModal({
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
   }, [onClose, onPrev, onNext]);
-
+const [showRaw, setShowRaw] = useState(false);
   const reasons =
     typeof candidate.reasons === "string"
       ? candidate.reasons.split(";").map((r) => r.trim())
