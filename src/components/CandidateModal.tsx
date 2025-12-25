@@ -15,6 +15,7 @@ type Props = {
   onNext: () => void;
 };
 
+const [showRaw, setShowRaw] = useState(false);
 export default function CandidateModal({
   candidate,
   onClose,
@@ -22,7 +23,6 @@ export default function CandidateModal({
   onNext,
 }: Props) {
 
-  const [showRaw, setShowRaw] = useState(false);
   // Keyboard shortcuts
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
