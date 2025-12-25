@@ -28,12 +28,6 @@ export default function Dashboard() {
     .catch(() => setError("Failed to load dashboard stats"));
 }, [selectedBatch]);
 
-{!stats && (
-  <p className="text-gray-500 mb-4">
-    Select a batch to view statistics.
-  </p>
-)}
-
   return (
     <div className="flex h-screen bg-gray-100">
       {/* Sidebar */}
@@ -84,6 +78,11 @@ export default function Dashboard() {
       <main className="flex-1 p-8 overflow-y-auto">
         <h2 className="text-2xl font-semibold mb-6">Dashboard</h2>
 
+{!stats && (
+  <p className="text-gray-500 mb-4">
+    Select a batch to view statistics.
+  </p>
+)}
         {/* Stats */}
         {stats && (
           <div className="grid grid-cols-4 gap-6 mb-8">
