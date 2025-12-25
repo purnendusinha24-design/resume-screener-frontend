@@ -1,33 +1,27 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import CandidateModal from "./CandidateModal";
-
-type Candidate = {
-  id: string;
-  filename: string;
-  score: number;
-  verdict: string;
-  reasons: string;
-  rawText: string;
-};
+import { useCandidates } from "../hooks/useCandidates";
 
 type Props = {
   batchId: string;
 };
 
 export default function CandidateTable({ batchId }: Props) {
-  const [candidates, setCandidates] = useState<Candidate[]>([]);
+  const { data: candidates, loading } = useCandidates(batchId);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
-  useEffect(() => {
-    fetch(`https://resume-screener-backend-m6q4.onrender.com/batch/${batchId}/results`)
-      .then((res) => res.json())
-      .then((data) => setCandidates(data.rankedResumes));
-  }, [batchId]);
+  if (loading) {
+    return <p className="text-gray-500">Loading candidates...</p>;
+  }
+
+  if (!candidates.length) {
+    return <p className="text-gray-500">No resumes found for this batch.</p>;
+  }
 
   // 🔑 Keyboard navigation
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
-      if (candidates.length === 0) return;
+      if (!candidates.length) return;
 
       if (e.key === "ArrowDown") {
         setSelectedIndex((i) =>
@@ -40,15 +34,11 @@ export default function CandidateTable({ batchId }: Props) {
           i === null ? 0 : Math.max(i - 1, 0)
         );
       }
-
-      if (e.key === "Enter" && selectedIndex !== null) {
-        // open modal — already handled by render
-      }
     };
 
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
-  }, [candidates, selectedIndex]);
+  }, [candidates]);
 
   return (
     <>
