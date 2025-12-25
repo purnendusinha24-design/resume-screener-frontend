@@ -18,11 +18,21 @@ export default function Dashboard() {
   const { batches, loading: batchesLoading } = useBatches();
 
   useEffect(() => {
-    fetch("https://resume-screener-backend-m6q4.onrender.com/api/stats")
-      .then((res) => res.json())
-      .then(setStats)
-      .catch(() => setError("Failed to load dashboard stats"));
-  }, []);
+  if (!selectedBatch) return;
+
+  fetch(
+    `https://resume-screener-backend-m6q4.onrender.com/api/stats?batchId=${selectedBatch}`
+  )
+    .then(res => res.json())
+    .then(setStats)
+    .catch(() => setError("Failed to load dashboard stats"));
+}, [selectedBatch]);
+
+{!stats && (
+  <p className="text-gray-500 mb-4">
+    Select a batch to view statistics.
+  </p>
+)}
 
   return (
     <div className="flex h-screen bg-gray-100">
