@@ -30,41 +30,42 @@ export default function Dashboard() {
       <aside className="w-64 bg-gray-900 text-white p-6">
         <h1 className="text-xl font-bold mb-8">AI Resume Screener</h1>
         <nav className="space-y-4 text-sm">
-  <NavLink
-    to="/"
-    className={({ isActive }) =>
-      isActive ? "text-blue-400 font-medium" : "text-gray-400"
-    }
-  >
-    Dashboard
-  </NavLink>
 
   <NavLink
-    to="/candidates"
-    className={({ isActive }) =>
+  to="/"
+  className={({ isActive }) =>
+    `block px-2 py-1 rounded ${
       isActive ? "text-blue-400 font-medium" : "text-gray-400"
-    }
-  >
-    Candidates
-  </NavLink>
+    }`
+  }
+>
+  Dashboard
+</NavLink>
 
-  <NavLink
-    to="/upload"
-    className={({ isActive }) =>
-      isActive ? "text-blue-400 font-medium" : "text-gray-400"
-    }
-  >
-    Upload Resume
-  </NavLink>
+<NavLink to="/candidates" className={({ isActive }) =>
+  `block px-2 py-1 rounded ${
+    isActive ? "text-blue-400 font-medium" : "text-gray-400"
+  }`
+}>
+  Candidates
+</NavLink>
 
-  <NavLink
-    to="/settings"
-    className={({ isActive }) =>
-      isActive ? "text-blue-400 font-medium" : "text-gray-400"
-    }
-  >
-    Settings
-  </NavLink>
+<NavLink to="/upload" className={({ isActive }) =>
+  `block px-2 py-1 rounded ${
+    isActive ? "text-blue-400 font-medium" : "text-gray-400"
+  }`
+}>
+  Upload Resume
+</NavLink>
+
+<NavLink to="/settings" className={({ isActive }) =>
+  `block px-2 py-1 rounded ${
+    isActive ? "text-blue-400 font-medium" : "text-gray-400"
+  }`
+}>
+  Settings
+</NavLink>
+
 </nav>
 
       </aside>
