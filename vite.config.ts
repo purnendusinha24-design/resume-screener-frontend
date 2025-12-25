@@ -3,5 +3,8 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   base: '/resume-screen-frontend/',
+  build: {
+    outDir: 'docs'
+  },
   plugins: [react()],
 })
