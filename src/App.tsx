@@ -11,7 +11,6 @@ export default function App() {
     <Routes>
       <Route path="/" element={<Dashboard />} />
       <Route path="/candidates" element={<Placeholder title="Candidates" />} />
-      <Route path="/upload" element={<Placeholder title="Upload Resume" />} />
       <Route path="/settings" element={<Placeholder title="Settings" />} />
       <Route path="/upload" element={<UploadResume />} />
     </Routes>
